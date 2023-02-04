@@ -1,0 +1,12 @@
+#container{
+    display: grid;
+    width: 400px;
+    height: 400px;
+}
+
+.square{
+    height: 100%;
+    width: 100%;
+    border: 1px solid grey;
+    background-color: azure;
+}
