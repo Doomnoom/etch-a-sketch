@@ -12,8 +12,13 @@ for(let i = 0; i < size * size; i++){
 
 const gridElements = document.querySelectorAll('.square');
 
-gridElements.forEach(gridElements => gridElements.addEventListener('click', changecolor));
+gridElements.forEach(gridElements => gridElements.addEventListener('mouseover', changeColor));
+gridElements.forEach(gridElements => gridElements.addEventListener('mouseout', revertColor))
 
-function changecolor(){
-    square.setAtribute('style', 'background: black;');
+function changeColor(){
+    this.classList.add('hover');
+}
+
+function revertColor(){
+    this.classList.remove('hover');
 }
