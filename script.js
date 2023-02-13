@@ -1,33 +1,51 @@
-const size = 8;
 const container = document.querySelector('#container');
+const deleteButton = document.querySelector('#deleteButton');
+const colorPalette = document.querySelector('#palette');
+const size = 16;
+let gridCells = [];
 
-container.style.gridTemplateColumns = `repeat(${size}, 1fr)`;
-container.style.gridTemplateRows = `repeat(${size}, 1fr)`;
+function createGrid(size){
+    for(let i = 0; i < size * size; i++){
+        const cell = document.createElement('div');
+        cell.classList.add('grid-cell');
+        container.appendChild(cell);
+        gridCells.push(cell);
+    }
 
-//populates webpage with drawing grid
+    container.style.gridTemplateColumns = `repeat(${size}, 1fr)`;
+    container.style.gridTemplateRows = `repeat(${size}, 1fr)`;
 
-for(let i = 0; i < size * size; i++){
-    const square = document.createElement('div');
-    square.classList.add('square');
-    container.appendChild(square);
+    const gridBoxes = document.querySelectorAll('.grid-cell');
+    gridBoxes.forEach(gridBoxes => gridBoxes.addEventListener('click', test));
 }
 
-const color = document.querySelector('.colorPicker');
-
-const gridElements = document.querySelectorAll('.square');
-
-gridElements.forEach(gridElements => gridElements.addEventListener('mouseover', changeColor));
-gridElements.forEach(gridElements => gridElements.addEventListener('mouseout', revertColor));
-gridElements.forEach(gridElements => gridElements.addEventListener('click', test));
-
-function changeColor(){
-    this.classList.add('hover');
+function deleteGrid(){
+    while(container.firstChild){
+        container.removeChild(container.firstChild);
+    }
 }
 
-function revertColor(){
-    this.classList.remove('hover');
+function reloadGrid(){
+    let newSize = prompt('New size: ');
+
+    if(newSize > 100){
+        newSize = 100;
+    }
+    else if(newSize < 2){
+        newSize = 2;
+    }
+    else if(parseInt(newSize) === NaN){
+        return;
+    }
+
+
+    deleteGrid();
+    createGrid(newSize);
 }
 
 function test(){
-    this.style.backgroundColor = color.value;
+    this.style.backgroundColor = colorPalette.value;
 }
+
+deleteButton.addEventListener('click', reloadGrid);
+createGrid(size);
